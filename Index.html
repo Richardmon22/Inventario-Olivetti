@@ -397,6 +397,49 @@
     .chart-modal-empty { padding: 60px 20px; text-align: center; color: var(--text-muted); }
     .chart-modal-empty i { font-size: 3rem; margin-bottom: 12px; opacity: .4; display: block; }
 
+    /* ===== REPORTE DRILL-DOWN INCIDENCIAS SDK ===== */
+    .sdk-report-modal { width: 1020px; }
+    .sdk-report-badge { display: inline-block; font-size: .6rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; background: rgba(255,255,255,.2); padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+    .sdk-report-toolbar { display: flex; align-items: center; gap: 10px; padding: 12px 22px; background: var(--card-bg); border-bottom: 1px solid var(--border-color); font-size: .82rem; color: var(--text-muted); }
+    .sdk-report-toolbar label { font-weight: 700; }
+    .sdk-report-toolbar select { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-main); font-size: .82rem; font-weight: 600; }
+    .sdk-report-dia { margin-left: auto; font-weight: 600; }
+    .sdk-report-body { display: grid; grid-template-columns: 250px 1fr; gap: 16px; padding: 16px 22px; background: var(--bg-dark); max-height: 66vh; overflow-y: auto; }
+    .sdk-report-left { display: flex; flex-direction: column; gap: 12px; }
+    .sdk-total-card, .sdk-principal-card { border-radius: 12px; padding: 16px; background: var(--card-bg); border: 1px solid var(--border-color); }
+    .sdk-total-label { font-size: .6rem; font-weight: 800; letter-spacing: .6px; color: var(--text-muted); text-transform: uppercase; }
+    .sdk-total-value { font-size: 2.7rem; font-weight: 800; line-height: 1; margin: 8px 0 6px; color: var(--text-main); }
+    .sdk-total-sub { font-size: .76rem; color: var(--text-muted); line-height: 1.4; }
+    .sdk-principal-card { background: rgba(139,92,246,.12); border-color: rgba(139,92,246,.4); }
+    .sdk-principal-head { font-size: .64rem; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--accent-purple); margin-bottom: 6px; }
+    .sdk-principal-text { font-size: .8rem; font-weight: 600; color: var(--text-main); line-height: 1.45; }
+    .sdk-report-main { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .sdk-report-panel { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; }
+    .sdk-report-panel-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .sdk-report-panel-title { font-weight: 800; font-size: .9rem; color: var(--text-main); }
+    .sdk-report-legend { font-size: .72rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .sdk-report-legend i { width: 10px; height: 10px; border-radius: 2px; background: #8b5cf6; display: inline-block; }
+    .sdk-bar-row { display: grid; grid-template-columns: 160px 1fr auto; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .sdk-bar-name { font-size: .8rem; font-weight: 700; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sdk-bar-track { height: 26px; border-radius: 6px; background: var(--border-color); overflow: hidden; }
+    .sdk-bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: .7rem; font-weight: 800; min-width: 46px; overflow: hidden; white-space: nowrap; transition: width .5s ease; }
+    .sdk-bar-meta { font-size: .72rem; color: var(--text-muted); text-align: right; white-space: nowrap; }
+    .sdk-bar-meta b { color: var(--text-main); }
+    .sdk-report-foot { font-size: .7rem; color: var(--text-muted); margin-top: 4px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+    .sdk-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sdk-detail-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; background: var(--bg-dark); }
+    .sdk-detail-card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 800; font-size: .83rem; color: var(--text-main); margin-bottom: 8px; }
+    .sdk-detail-card-head em { color: var(--accent-purple); font-style: normal; font-size: .95rem; }
+    .sdk-detail-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+    .sdk-detail-list li { font-size: .75rem; color: var(--text-muted); display: flex; justify-content: space-between; gap: 8px; }
+    .sdk-detail-list li span:last-child { font-weight: 700; color: var(--text-main); }
+    .sdk-detail-link { display: inline-block; margin-top: 10px; font-size: .75rem; font-weight: 700; color: var(--accent-blue); cursor: pointer; border-top: 1px dashed var(--border-color); padding-top: 8px; width: 100%; text-align: left; }
+    .sdk-detail-link:hover { text-decoration: underline; }
+    @media (max-width: 720px) {
+      .sdk-report-body { grid-template-columns: 1fr; }
+      .sdk-detail-grid { grid-template-columns: 1fr; }
+    }
+
     /* ===================== BADGE CONTADOR DE PENDIENTES ===================== */
     .pending-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -464,6 +507,8 @@
     <div class="nav-item" onclick="switchTab('inventario', this)"><span><i class="fa-solid fa-list-check" style="margin-right:10px;"></i>Inventario de Equipos</span><span class="badge" id="countBadge">0</span></div>
     <div class="nav-item" onclick="switchTab('agencias', this)"><span><i class="fa-solid fa-building" style="margin-right:10px;"></i>Resumen Agencias</span></div>
     <div class="nav-item" onclick="switchTab('proveduria', this)"><span><i class="fa-solid fa-truck-fast" style="margin-right:10px;"></i>Proveduría</span><span class="badge" id="countBadgeProveduria">0</span></div>
+    <div class="menu-section">INTEGRACIÓN</div>
+    <div class="nav-item" onclick="switchTab('incidencias', this)"><span><i class="fa-solid fa-headset" style="margin-right:10px;"></i>Incidencias SDK</span><span class="badge" id="countBadgeIncidencias" style="background:var(--accent-amber)">0</span></div>
   </div>
   <div>
     <button class="btn-action" onclick="abrirModalForm()"><i class="fa-solid fa-plus"></i> Registrar Impresora</button>
@@ -621,7 +666,7 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title"><i class="fa-solid fa-list-ol"></i>Listado de Agencias (orden alfabético)</div>
+        <div class="panel-title"><i class="fa-solid fa-list-ol"></i>Listado de Agencias (orden del terminal)</div>
         <div class="panel-hint"><i class="fa-solid fa-hand-pointer"></i> Clic para ver equipos</div>
       </div>
       <div class="agency-list" id="listaAgencias"></div>
@@ -754,6 +799,117 @@
       </div>
     </div>
   </div>
+
+  <!-- ===================== INCIDENCIAS SERVICEDESK ===================== -->
+  <div class="content-body" id="view-incidencias">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-title">Total Incidencias Olivetti</div>
+        <div class="kpi-value" id="sdkKpiTotal" style="color:var(--accent-amber)">0</div>
+        <div class="kpi-subtext" id="sdkKpiTotalSub">Casos registrados en ServiceDesk</div>
+        <div class="kpi-progress"><div class="kpi-progress-bar" style="width:100%;background:linear-gradient(90deg,var(--accent-amber),var(--accent-pink));"></div></div>
+        <i class="fa-solid fa-headset kpi-icon" style="color:var(--accent-amber)"></i>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Mes Actual</div>
+        <div class="kpi-value" id="sdkKpiMesActual" style="color:var(--accent-blue)">0</div>
+        <div class="kpi-subtext" id="sdkKpiMesActualSub">Incidencias este mes</div>
+        <div class="kpi-progress"><div class="kpi-progress-bar" id="sdkBarMes" style="width:0%;background:var(--accent-blue);"></div></div>
+        <i class="fa-solid fa-calendar-day kpi-icon" style="color:var(--accent-blue)"></i>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Áreas Atendidas</div>
+        <div class="kpi-value" id="sdkKpiAreas" style="color:var(--accent-purple)">0</div>
+        <div class="kpi-subtext" id="sdkKpiAreasSub">Agencias / áreas distintas</div>
+        <div class="kpi-progress"><div class="kpi-progress-bar" style="width:100%;background:linear-gradient(90deg,var(--accent-purple),var(--accent-pink));"></div></div>
+        <i class="fa-solid fa-building kpi-icon" style="color:var(--accent-purple)"></i>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Canales Usados</div>
+        <div class="kpi-value" id="sdkKpiCanales" style="color:var(--accent-green)">0</div>
+        <div class="kpi-subtext" id="sdkKpiCanalesSub">Vías de contacto</div>
+        <div class="kpi-progress"><div class="kpi-progress-bar" style="width:100%;background:var(--accent-green);"></div></div>
+        <i class="fa-solid fa-phone kpi-icon" style="color:var(--accent-green)"></i>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fa-solid fa-chart-bar"></i>Incidencias por Mes</div>
+        </div>
+        <canvas id="chartSdkMeses"></canvas>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fa-solid fa-users"></i>Por Analista</div>
+        </div>
+        <canvas id="chartSdkAnalistas"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="search-wrapper">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="sdkSearchInput" placeholder="Buscar por nombre, BS, área o canal..." oninput="debounceFiltrarSdk()">
+      </div>
+      <select id="sdkFiltroArea" onchange="filtrarSdk()" style="flex:1;min-width:170px;"><option value="">Todas las Áreas</option></select>
+      <select id="sdkFiltroAnalista" onchange="filtrarSdk()" style="flex:1;min-width:170px;"><option value="">Todos los Analistas</option></select>
+      <select id="sdkFiltroCanal" onchange="filtrarSdk()" style="flex:1;min-width:150px;"><option value="">Todos los Canales</option></select>
+      <input type="month" id="sdkFiltroMesDesde" onchange="filtrarSdk()" title="Desde mes" style="flex:0.8;min-width:140px;">
+      <input type="month" id="sdkFiltroMesHasta" onchange="filtrarSdk()" title="Hasta mes" style="flex:0.8;min-width:140px;">
+      <button class="btn-icon" onclick="resetFiltrosSdk()"><i class="fa-solid fa-eraser"></i><span class="btn-text">Limpiar</span></button>
+    </div>
+
+    <div class="results-card" id="sdkResultsCard">
+      <div class="results-main">
+        <div class="results-icon" style="background:linear-gradient(135deg,var(--accent-amber),var(--accent-pink));box-shadow:0 4px 12px rgba(245,158,11,.3);"><i class="fa-solid fa-headset"></i></div>
+        <div class="results-count-block">
+          <div class="results-count" id="sdkResultsCount">0</div>
+          <div class="results-count-label" id="sdkResultsCountLabel">Incidencias encontradas</div>
+        </div>
+      </div>
+      <div class="results-divider"></div>
+      <div class="results-stats">
+        <div class="results-stat">
+          <div class="results-stat-value" id="sdkResultsAreas" style="color:var(--accent-purple)">0</div>
+          <div class="results-stat-label"><i class="fa-solid fa-building" style="color:var(--accent-purple)"></i> Áreas</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-value" id="sdkResultsAnalistas" style="color:var(--accent-blue)">0</div>
+          <div class="results-stat-label"><i class="fa-solid fa-user-shield" style="color:var(--accent-blue)"></i> Analistas</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-value" id="sdkResultsCanales" style="color:var(--accent-green)">0</div>
+          <div class="results-stat-label"><i class="fa-solid fa-phone" style="color:var(--accent-green)"></i> Canales</div>
+        </div>
+      </div>
+      <div class="results-chips" id="sdkResultsChips"></div>
+    </div>
+
+    <div class="panel">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" onclick="ordenarSdk('fecha')">Fecha<i class="fa-solid fa-sort" id="sdkSort-fecha"></i></th>
+              <th>BS</th>
+              <th class="sortable" onclick="ordenarSdk('nombre')">Nombre<i class="fa-solid fa-sort" id="sdkSort-nombre"></i></th>
+              <th class="sortable" onclick="ordenarSdk('area')">Área<i class="fa-solid fa-sort" id="sdkSort-area"></i></th>
+              <th>Incidente</th>
+              <th class="sortable" onclick="ordenarSdk('canal')">Canal<i class="fa-solid fa-sort" id="sdkSort-canal"></i></th>
+              <th class="sortable" onclick="ordenarSdk('colaborador')">Analista<i class="fa-solid fa-sort" id="sdkSort-colaborador"></i></th>
+            </tr>
+          </thead>
+          <tbody id="sdkTablaCuerpo"></tbody>
+        </table>
+      </div>
+      <div class="pagination-bar">
+        <div id="sdkInfoPaginacion">Mostrando 0 registros</div>
+        <div class="pagination-buttons" id="sdkBotonesPaginacion"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL REGISTRO/EDICIÓN -->
@@ -879,6 +1035,58 @@
   </div>
 </div>
 
+<!-- MODAL REPORTE POR ANALISTA (drill-down del pastel SDK) -->
+<div class="modal-overlay" id="modalSdkOverlay" onclick="if(event.target===this)cerrarModalSdk()">
+  <div class="modal chart-modal sdk-report-modal">
+    <div class="chart-modal-header" style="background:linear-gradient(135deg,var(--accent-amber),var(--accent-pink));">
+      <div class="chart-modal-header-top">
+        <div>
+          <span class="sdk-report-badge">REPORTE POR ANALISTA</span>
+          <div class="chart-modal-title"><i class="fa-solid fa-user-shield"></i><span>Incidencias resueltas por analista</span></div>
+          <div class="chart-modal-subtitle">Distribución de la carga por analista en el ServiceDesk</div>
+        </div>
+        <i class="fa-solid fa-xmark detail-close" onclick="cerrarModalSdk()"></i>
+      </div>
+    </div>
+
+    <div class="sdk-report-toolbar">
+      <label for="sdkReportCanal">Canal</label>
+      <select id="sdkReportCanal" onchange="renderReporteSdk()"></select>
+      <span class="sdk-report-dia" id="sdkReportDia">—</span>
+    </div>
+
+    <div class="sdk-report-body">
+      <div class="sdk-report-left">
+        <div class="sdk-total-card">
+          <div class="sdk-total-label" id="sdkTotalLabel">TOTAL</div>
+          <div class="sdk-total-value" id="sdkTotalValue">0</div>
+          <div class="sdk-total-sub" id="sdkTotalSub">—</div>
+        </div>
+        <div class="sdk-principal-card">
+          <div class="sdk-principal-head">Analista principal</div>
+          <div class="sdk-principal-text" id="sdkPrincipalText">—</div>
+        </div>
+      </div>
+
+      <div class="sdk-report-main">
+        <div class="sdk-report-panel">
+          <div class="sdk-report-panel-head">
+            <span class="sdk-report-panel-title">Incidencias resueltas por analista</span>
+            <span class="sdk-report-legend"><i></i>Incidencias</span>
+          </div>
+          <div id="sdkReportBars" class="sdk-bars"></div>
+          <div class="sdk-report-foot" id="sdkReportFoot">—</div>
+        </div>
+
+        <div class="sdk-report-panel">
+          <div class="sdk-report-panel-title" style="margin-bottom:10px;">Detalle por analista</div>
+          <div id="sdkReportDetalle" class="sdk-detail-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ===================== ESTADO GLOBAL ===================== */
 let impresorasData = [];
@@ -898,6 +1106,10 @@ let detalleAgenciaActual = '';
 let chartModalSegmento = { tipo: null, valor: null };
 let chartModalAgencias = [];
 
+/* Estado drill-down Incidencias SDK */
+let sdkChartAnalista = '';
+let sdkChartIncidencias = [];
+
 /* Estado Proveduría */
 let provData = { proveduria: [], correspondencia: [] };
 let provGrupo = 'Proveduria';
@@ -906,6 +1118,19 @@ let provPage = 1;
 const provPorPagina = 15;
 let provOrden = { campo: null, direccion: 'asc' };
 let provDebounceTimer = null;
+
+/* Estado Incidencias SDK */
+let sdkData = [];
+let sdkFiltrado = [];
+let sdkPage = 1;
+const sdkPorPagina = 15;
+let sdkOrden = { campo: null, direccion: 'asc' };
+let sdkDebounceTimer = null;
+let sdkCargado = false;
+
+// Auto-actualización de incidencias del ServiceDesk (en ms).
+// Cambiá este valor si querés que refresque más rápido o más lento.
+const SDK_REFRESH_MS = 30000;
 
 const $ = id => document.getElementById(id);
 
@@ -918,6 +1143,9 @@ window.onload = function() {
   aplicarTemaGuardado();
   cargarDatosGenerales();
   cargarDatosProveduria();
+  cargarIncidenciasSDK();
+  // Refrescar automáticamente las incidencias del ServiceDesk
+  setInterval(() => cargarIncidenciasSDK(true), SDK_REFRESH_MS);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       cerrarModalForm();
@@ -1809,9 +2037,13 @@ function switchTab(tab, el) {
     dashboard: 'Panel General',
     inventario: 'Inventario de Equipos Olivetti',
     agencias: 'Resumen por Agencia',
-    proveduria: 'Proveduría y Correspondencia'
+    proveduria: 'Proveduría y Correspondencia',
+    incidencias: 'Incidencias Olivetti — ServiceDesk'
   };
   $('pageTitle').innerText = titles[tab] || 'Panel General';
+
+  // Al entrar a Incidencias, refrescar de inmediato los datos del ServiceDesk
+  if (tab === 'incidencias') cargarIncidenciasSDK();
 
   if (window.innerWidth <= 900) {
     $('sidebar').classList.remove('open');
@@ -2180,6 +2412,561 @@ function cambiarPaginaProv(p) {
   if (p < 1) return;
   provPage = p;
   renderTablaProv();
+}
+
+/* ==================================================================
+   ===================== MÓDULO INCIDENCIAS SDK =====================
+   ================================================================== */
+
+/* ---------- Carga de datos ---------- */
+function cargarIncidenciasSDK(silencioso) {
+  google.script.run.withSuccessHandler(res => {
+    if (res) {
+      if (res.error && !silencioso) {
+        showToast('ServiceDesk: ' + res.error, 'error');
+      }
+      // Preservar los filtros activos durante la actualización automática
+      const filtrosPrevios = {
+        area: $('sdkFiltroArea').value,
+        analista: $('sdkFiltroAnalista').value,
+        canal: $('sdkFiltroCanal').value,
+        mesDesde: $('sdkFiltroMesDesde').value,
+        mesHasta: $('sdkFiltroMesHasta').value,
+        busqueda: $('sdkSearchInput').value
+      };
+      sdkData = res.incidencias || [];
+      sdkCargado = true;
+      $('countBadgeIncidencias').innerText = sdkData.length;
+      poblarSelectsSdk();
+      if (filtrosPrevios.area) $('sdkFiltroArea').value = filtrosPrevios.area;
+      if (filtrosPrevios.analista) $('sdkFiltroAnalista').value = filtrosPrevios.analista;
+      if (filtrosPrevios.canal) $('sdkFiltroCanal').value = filtrosPrevios.canal;
+      $('sdkFiltroMesDesde').value = filtrosPrevios.mesDesde;
+      $('sdkFiltroMesHasta').value = filtrosPrevios.mesHasta;
+      $('sdkSearchInput').value = filtrosPrevios.busqueda;
+      renderSdkKPIs();
+      renderSdkCharts();
+      filtrarSdk();
+    }
+  }).withFailureHandler(err => {
+    if (!silencioso) showToast('Error al cargar incidencias SDK: ' + err.message, 'error');
+  }).obtenerIncidenciasOlivettiSDK();
+}
+
+/* ---------- Poblar selects ---------- */
+function poblarSelectsSdk() {
+  const areas = [...new Set(sdkData.map(i => i.area).filter(Boolean))].sort(compararAgencias);
+  const analistas = [...new Set(sdkData.map(i => i.colaborador).filter(Boolean))].sort();
+  const canales = [...new Set(sdkData.map(i => i.canal).filter(Boolean))].sort();
+
+  $('sdkFiltroArea').innerHTML = '<option value="">Todas las Áreas</option>' +
+    areas.map(a => `<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`).join('');
+  $('sdkFiltroAnalista').innerHTML = '<option value="">Todos los Analistas</option>' +
+    analistas.map(a => `<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`).join('');
+  $('sdkFiltroCanal').innerHTML = '<option value="">Todos los Canales</option>' +
+    canales.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+}
+
+/* ---------- KPIs ---------- */
+function renderSdkKPIs() {
+  const total = sdkData.length;
+  const ahora = new Date();
+  const mesActualStr = ahora.getFullYear() + '-' + String(ahora.getMonth() + 1).padStart(2, '0');
+  const delMes = sdkData.filter(i => i.fecha.startsWith(mesActualStr)).length;
+  const areasUnicas = new Set(sdkData.map(i => i.area).filter(Boolean)).size;
+  const canalesUnicos = new Set(sdkData.map(i => i.canal).filter(Boolean)).size;
+
+  $('sdkKpiTotal').innerText = total;
+  $('sdkKpiTotalSub').innerText = total === 1 ? '1 caso registrado en ServiceDesk' : total + ' casos registrados en ServiceDesk';
+  $('sdkKpiMesActual').innerText = delMes;
+  const pctMes = total ? (delMes / total) * 100 : 0;
+  $('sdkKpiMesActualSub').innerText = pctMes.toFixed(1) + '% del total anual';
+  $('sdkBarMes').style.width = pctMes + '%';
+  $('sdkKpiAreas').innerText = areasUnicas;
+  $('sdkKpiAreasSub').innerText = areasUnicas === 1 ? '1 agencia / área' : areasUnicas + ' agencias / áreas distintas';
+  $('sdkKpiCanales').innerText = canalesUnicos;
+  $('sdkKpiCanalesSub').innerText = canalesUnicos === 1 ? '1 vía de contacto' : canalesUnicos + ' vías de contacto';
+}
+
+/* ---------- Gráficas ---------- */
+function renderSdkCharts() {
+  // Por mes
+  const mesesNombre = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const conteoMeses = new Array(12).fill(0);
+  sdkData.forEach(i => {
+    const parts = i.fecha.split('-');
+    if (parts.length >= 2) {
+      const mesIdx = parseInt(parts[1], 10) - 1;
+      if (mesIdx >= 0 && mesIdx < 12) conteoMeses[mesIdx]++;
+    }
+  });
+
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const textColor = isDark ? '#94a3b8' : '#64748b';
+  const gridColor = isDark ? '#1e293b' : '#e2e8f0';
+
+  if (charts['chartSdkMeses']) charts['chartSdkMeses'].destroy();
+  const canvasMeses = $('chartSdkMeses');
+  if (canvasMeses) {
+    charts['chartSdkMeses'] = new Chart(canvasMeses.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: mesesNombre,
+        datasets: [{
+          label: 'Incidencias',
+          data: conteoMeses,
+          backgroundColor: 'rgba(245,158,11,.6)',
+          borderColor: '#f59e0b',
+          borderWidth: 2,
+          borderRadius: 6,
+          hoverBackgroundColor: 'rgba(245,158,11,.85)'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        animation: { duration: 800 },
+        scales: {
+          y: { beginAtZero: true, ticks: { color: textColor, stepSize: 1, font: { size: 11 } }, grid: { color: gridColor } },
+          x: { ticks: { color: textColor, font: { size: 11 } }, grid: { display: false } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: isDark ? '#0f172a' : '#ffffff',
+            titleColor: isDark ? '#f8fafc' : '#0f172a',
+            bodyColor: isDark ? '#94a3b8' : '#64748b',
+            borderColor: isDark ? '#1e293b' : '#e2e8f0',
+            borderWidth: 1, padding: 12, cornerRadius: 8
+          }
+        }
+      }
+    });
+  }
+
+  // Por analista (dona con colores del sistema, título/subtítulo y drill-down)
+  const conteoAnalistas = {};
+  sdkData.forEach(i => {
+    const a = i.colaborador || 'Sin asignar';
+    conteoAnalistas[a] = (conteoAnalistas[a] || 0) + 1;
+  });
+  const anLabels = Object.keys(conteoAnalistas).sort((a, b) => conteoAnalistas[b] - conteoAnalistas[a]);
+  const anData = anLabels.map(k => conteoAnalistas[k]);
+  // Colores del sistema (se adaptan al tema claro/oscuro)
+  const anColors = (() => {
+    const cs = getComputedStyle(document.documentElement);
+    const v = (name, fb) => (cs.getPropertyValue(name).trim() || fb);
+    return [
+      v('--accent-blue', '#3b82f6'),
+      v('--accent-purple', '#8b5cf6'),
+      v('--accent-green', '#10b981'),
+      v('--accent-red', '#ef4444'),
+      v('--accent-amber', '#f59e0b'),
+      v('--accent-pink', '#ec4899')
+    ];
+  })();
+
+  if (charts['chartSdkAnalistas']) charts['chartSdkAnalistas'].destroy();
+  const canvasAnalistas = $('chartSdkAnalistas');
+  if (canvasAnalistas) {
+    charts['chartSdkAnalistas'] = new Chart(canvasAnalistas.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: anLabels,
+        datasets: [{
+          data: anData,
+          backgroundColor: anLabels.map((_, i) => anColors[i % anColors.length]),
+          borderColor: isDark ? '#151e32' : '#ffffff',
+          borderWidth: 2,
+          hoverOffset: 12
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '60%',
+        animation: { animateScale: true, animateRotate: true, duration: 800 },
+        onClick: (evt, elements) => {
+          if (!elements.length) return;
+          const idx = elements[0].index;
+          abrirModalSdkAnalista(anLabels[idx]);
+        },
+        onHover: (evt, elements) => {
+          evt.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Incidencias por Analista',
+            color: isDark ? '#f8fafc' : '#0f172a',
+            font: { size: 14, weight: '700' },
+            padding: { bottom: 2 }
+          },
+          subtitle: {
+            display: true,
+            text: 'Distribución de la carga en el ServiceDesk',
+            color: textColor,
+            font: { size: 11.5 },
+            padding: { bottom: 12 }
+          },
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: textColor,
+              padding: 10,
+              font: { size: 11, weight: '600' },
+              usePointStyle: true,
+              pointStyle: 'circle',
+              generateLabels: function(chart) {
+                const datos = chart.data.datasets[0].data;
+                const total = datos.reduce((a, b) => a + b, 0);
+                return chart.data.labels.map((label, i) => ({
+                  text: `${label} (${total ? ((datos[i] / total) * 100).toFixed(0) : 0}%)`,
+                  fillStyle: chart.data.datasets[0].backgroundColor[i],
+                  strokeStyle: chart.data.datasets[0].backgroundColor[i],
+                  pointStyle: 'circle',
+                  index: i
+                }));
+              }
+            }
+          },
+          tooltip: {
+            backgroundColor: isDark ? '#0f172a' : '#ffffff',
+            titleColor: isDark ? '#f8fafc' : '#0f172a',
+            bodyColor: isDark ? '#94a3b8' : '#64748b',
+            borderColor: isDark ? '#1e293b' : '#e2e8f0',
+            borderWidth: 1,
+            padding: 12,
+            cornerRadius: 8,
+            callbacks: {
+              label: function(ctx) {
+                const t = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                const pct = t ? ((ctx.parsed / t) * 100).toFixed(1) : 0;
+                return ` ${ctx.label}: ${ctx.parsed} (${pct}%)`;
+              },
+              afterLabel: () => '👆 Clic para ver incidencias'
+            }
+          }
+        }
+      }
+    });
+  }
+}
+
+/* ---------- Drill-down del pastel "Por Analista" (reporte estilo ServiceDesk) ---------- */
+const SDK_BAR_COLORS = ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#ef4444', '#06b6d4', '#84cc16', '#f97316', '#0ea5e9'];
+
+function abrirModalSdkAnalista() {
+  // Poblar el selector de canal con los canales disponibles
+  const canales = [...new Set(sdkData.map(i => i.canal).filter(Boolean))].sort(compararAgencias);
+  $('sdkReportCanal').innerHTML = '<option value="">Todos los canales</option>' +
+    canales.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+  $('sdkReportCanal').value = '';
+
+  // Fecha del día
+  const hoy = new Date();
+  const dia = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`;
+  $('sdkReportDia').innerText = 'Día: ' + dia;
+
+  renderReporteSdk();
+  $('modalSdkOverlay').classList.add('active');
+}
+
+function cerrarModalSdk() {
+  $('modalSdkOverlay').classList.remove('active');
+}
+
+function renderReporteSdk() {
+  const canalSel = $('sdkReportCanal').value;
+  const base = canalSel ? sdkData.filter(i => (i.canal || '') === canalSel) : sdkData;
+  const total = base.length;
+
+  // Conteo por analista
+  const conteo = {};
+  base.forEach(i => {
+    const a = i.colaborador || 'Sin asignar';
+    conteo[a] = (conteo[a] || 0) + 1;
+  });
+  const analistas = Object.keys(conteo).sort((a, b) => conteo[b] - conteo[a]);
+  const nAnalistas = analistas.length;
+
+  // Tarjeta de total
+  $('sdkTotalLabel').innerText = canalSel ? 'TOTAL EN EL CANAL' : 'TOTAL GENERAL';
+  $('sdkTotalValue').innerText = total;
+  $('sdkTotalSub').innerText = canalSel
+    ? `${canalSel} · ${nAnalistas} analista(s)`
+    : `ServiceDesk · ${nAnalistas} analista(s)`;
+
+  // Analista principal
+  const principal = analistas[0];
+  if (principal) {
+    const n = conteo[principal];
+    const pct = total ? ((n / total) * 100).toFixed(1) : 0;
+    $('sdkPrincipalText').innerHTML = `<b>${escapeHtml(principal)}</b> resolvió el ${pct}% de las incidencias${canalSel ? ' de este canal' : ''} (${n} de ${total}).`;
+  } else {
+    $('sdkPrincipalText').innerText = 'Sin datos.';
+  }
+
+  // Barras horizontales por analista
+  const bars = $('sdkReportBars');
+  if (!analistas.length) {
+    bars.innerHTML = '<div class="chart-modal-empty"><i class="fa-solid fa-inbox"></i><p>Sin incidencias.</p></div>';
+  } else {
+    bars.innerHTML = analistas.map((a, idx) => {
+      const n = conteo[a];
+      const pct = total ? (n / total) * 100 : 0;
+      const color = SDK_BAR_COLORS[idx % SDK_BAR_COLORS.length];
+      return `
+        <div class="sdk-bar-row">
+          <div class="sdk-bar-name" title="${escapeHtml(a)}">${escapeHtml(a)}</div>
+          <div class="sdk-bar-track"><div class="sdk-bar-fill" style="width:${pct.toFixed(1)}%;background:${color}">${pct.toFixed(1)}%</div></div>
+          <div class="sdk-bar-meta"><b>${n} caso${n !== 1 ? 's' : ''}</b></div>
+        </div>`;
+    }).join('');
+  }
+
+  $('sdkReportFoot').innerHTML = `<span>Porcentaje del total${canalSel ? ' del canal' : ''}: ${total} incidencia${total !== 1 ? 's' : ''}</span><span>Conteos según los filtros de la vista</span>`;
+
+  // Detalle por analista agrupado por tipo de incidente
+  const detalle = $('sdkReportDetalle');
+  if (!analistas.length) {
+    detalle.innerHTML = '<div class="chart-modal-empty"><i class="fa-solid fa-inbox"></i><p>Sin datos.</p></div>';
+  } else {
+    detalle.innerHTML = analistas.map(a => {
+      const items = base.filter(i => (i.colaborador || 'Sin asignar') === a);
+      const tipos = {};
+      items.forEach(i => {
+        const t = i.incidente || 'Sin incidente';
+        tipos[t] = (tipos[t] || 0) + 1;
+      });
+      const tiposArr = Object.keys(tipos).sort((x, y) => tipos[y] - tipos[x]);
+      const lista = tiposArr.map(t => `<li><span>${escapeHtml(t)}</span><span>${tipos[t]}</span></li>`).join('');
+      return `
+        <div class="sdk-detail-card">
+          <div class="sdk-detail-card-head"><span>${escapeHtml(a)}</span><em>${items.length}</em></div>
+          <ul class="sdk-detail-list">${lista}</ul>
+          <div class="sdk-detail-link" onclick="verIncidenciasAnalista('${escapeJs(a)}')"><i class="fa-solid fa-list-ul"></i> Ver las ${items.length} incidencia${items.length !== 1 ? 's' : ''}</div>
+        </div>`;
+    }).join('');
+  }
+}
+
+function verIncidenciasAnalista(analista) {
+  cerrarModalSdk();
+  const sel = $('sdkFiltroAnalista');
+  if (sel) {
+    const existe = Array.from(sel.options).some(o => o.value === analista);
+    if (!existe) {
+      const opt = document.createElement('option');
+      opt.value = analista;
+      opt.textContent = analista;
+      sel.appendChild(opt);
+    }
+    sel.value = analista;
+  }
+  filtrarSdk();
+}
+
+/* ---------- Debounce ---------- */
+function debounceFiltrarSdk() {
+  clearTimeout(sdkDebounceTimer);
+  sdkDebounceTimer = setTimeout(filtrarSdk, 300);
+}
+
+/* ---------- Filtrado ---------- */
+function filtrarSdk() {
+  const term = $('sdkSearchInput').value.toLowerCase().trim();
+  const area = $('sdkFiltroArea').value;
+  const analista = $('sdkFiltroAnalista').value;
+  const canal = $('sdkFiltroCanal').value;
+  const mesDesde = $('sdkFiltroMesDesde').value;
+  const mesHasta = $('sdkFiltroMesHasta').value;
+
+  sdkFiltrado = sdkData.filter(item => {
+    if (area && item.area !== area) return false;
+    if (analista && item.colaborador !== analista) return false;
+    if (canal && item.canal !== canal) return false;
+    if (mesDesde && item.fecha.substring(0, 7) < mesDesde) return false;
+    if (mesHasta && item.fecha.substring(0, 7) > mesHasta) return false;
+    if (term) {
+      const blob = [item.nombre, item.bs, item.area, item.canal, item.colaborador, item.incidente].join(' ').toLowerCase();
+      if (!blob.includes(term)) return false;
+    }
+    return true;
+  });
+
+  // Por defecto, mostrar desde la última incidencia registrada (más reciente primero)
+  if (sdkOrden.campo) aplicarOrdenSdk();
+  else sdkFiltrado.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+  sdkPage = 1;
+  renderTablaSdk();
+  actualizarContadorSdk();
+}
+
+/* ---------- Ordenamiento ---------- */
+function ordenarSdk(campo) {
+  if (sdkOrden.campo === campo) {
+    sdkOrden.direccion = sdkOrden.direccion === 'asc' ? 'desc' : 'asc';
+  } else {
+    sdkOrden.campo = campo;
+    sdkOrden.direccion = 'asc';
+  }
+  aplicarOrdenSdk();
+  actualizarIconosOrdenSdk();
+  sdkPage = 1;
+  renderTablaSdk();
+}
+
+function aplicarOrdenSdk() {
+  const { campo, direccion } = sdkOrden;
+  sdkFiltrado.sort((a, b) => {
+    const va = (a[campo] || '').toString().toLowerCase();
+    const vb = (b[campo] || '').toString().toLowerCase();
+    if (va < vb) return direccion === 'asc' ? -1 : 1;
+    if (va > vb) return direccion === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+function actualizarIconosOrdenSdk() {
+  ['fecha', 'nombre', 'area', 'canal', 'colaborador'].forEach(c => {
+    const icon = $(`sdkSort-${c}`);
+    if (!icon) return;
+    const th = icon.parentElement;
+    if (sdkOrden.campo === c) {
+      th.classList.add('active');
+      icon.className = `fa-solid fa-sort-${sdkOrden.direccion === 'asc' ? 'up' : 'down'}`;
+    } else {
+      th.classList.remove('active');
+      icon.className = 'fa-solid fa-sort';
+    }
+  });
+}
+
+/* ---------- Contador de resultados ---------- */
+function actualizarContadorSdk() {
+  const total = sdkFiltrado.length;
+  const areasUniq = new Set(sdkFiltrado.map(i => i.area).filter(Boolean)).size;
+  const analistasUniq = new Set(sdkFiltrado.map(i => i.colaborador).filter(Boolean)).size;
+  const canalesUniq = new Set(sdkFiltrado.map(i => i.canal).filter(Boolean)).size;
+
+  $('sdkResultsCount').innerText = total;
+  $('sdkResultsAreas').innerText = areasUniq;
+  $('sdkResultsAnalistas').innerText = analistasUniq;
+  $('sdkResultsCanales').innerText = canalesUniq;
+
+  const hayFiltros = tieneFiltrosSdkActivos();
+  $('sdkResultsCountLabel').innerText = hayFiltros
+    ? (total === 1 ? 'Incidencia coincide con los filtros' : 'Incidencias coinciden con los filtros')
+    : 'Incidencias Olivetti registradas';
+  $('sdkResultsCard').classList.toggle('filtros-activos', hayFiltros);
+
+  const chips = $('sdkResultsChips');
+  const chipsHTML = [];
+  const termVal = $('sdkSearchInput').value.trim();
+  const areaVal = $('sdkFiltroArea').value;
+  const anVal = $('sdkFiltroAnalista').value;
+  const cnVal = $('sdkFiltroCanal').value;
+  const mdVal = $('sdkFiltroMesDesde').value;
+  const mhVal = $('sdkFiltroMesHasta').value;
+
+  if (termVal) chipsHTML.push(`<span class="filter-chip search-chip" onclick="limpiarFiltroSdk('search')"><i class="fa-solid fa-magnifying-glass"></i><span>"${escapeHtml(termVal.length > 20 ? termVal.slice(0, 20) + '…' : termVal)}"</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+  if (areaVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('area')"><i class="fa-solid fa-building"></i><span>${escapeHtml(areaVal)}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+  if (anVal) chipsHTML.push(`<span class="filter-chip modelo-chip" onclick="limpiarFiltroSdk('analista')"><i class="fa-solid fa-user-shield"></i><span>${escapeHtml(anVal)}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+  if (cnVal) chipsHTML.push(`<span class="filter-chip usb-chip" onclick="limpiarFiltroSdk('canal')"><i class="fa-solid fa-phone"></i><span>${escapeHtml(cnVal)}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+  if (mdVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('mesDesde')" style="background:rgba(236,72,153,.12);color:var(--accent-pink);border-color:rgba(236,72,153,.35)"><i class="fa-solid fa-calendar"></i><span>Desde: ${mdVal}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+  if (mhVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('mesHasta')" style="background:rgba(236,72,153,.12);color:var(--accent-pink);border-color:rgba(236,72,153,.35)"><i class="fa-solid fa-calendar"></i><span>Hasta: ${mhVal}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+
+  chips.innerHTML = chipsHTML.length
+    ? `<span class="results-chips-label">Filtros:</span>` + chipsHTML.join('')
+    : `<span class="results-empty-chips">Sin filtros aplicados</span>`;
+}
+
+function tieneFiltrosSdkActivos() {
+  return !!(
+    $('sdkSearchInput').value.trim() ||
+    $('sdkFiltroArea').value ||
+    $('sdkFiltroAnalista').value ||
+    $('sdkFiltroCanal').value ||
+    $('sdkFiltroMesDesde').value ||
+    $('sdkFiltroMesHasta').value
+  );
+}
+
+function limpiarFiltroSdk(tipo) {
+  if (tipo === 'search') $('sdkSearchInput').value = '';
+  if (tipo === 'area') $('sdkFiltroArea').value = '';
+  if (tipo === 'analista') $('sdkFiltroAnalista').value = '';
+  if (tipo === 'canal') $('sdkFiltroCanal').value = '';
+  if (tipo === 'mesDesde') $('sdkFiltroMesDesde').value = '';
+  if (tipo === 'mesHasta') $('sdkFiltroMesHasta').value = '';
+  filtrarSdk();
+}
+
+function resetFiltrosSdk() {
+  $('sdkSearchInput').value = '';
+  $('sdkFiltroArea').value = '';
+  $('sdkFiltroAnalista').value = '';
+  $('sdkFiltroCanal').value = '';
+  $('sdkFiltroMesDesde').value = '';
+  $('sdkFiltroMesHasta').value = '';
+  sdkOrden = { campo: null, direccion: 'asc' };
+  actualizarIconosOrdenSdk();
+  filtrarSdk();
+}
+
+/* ---------- Render tabla ---------- */
+function renderTablaSdk() {
+  const tbody = $('sdkTablaCuerpo');
+  const total = sdkFiltrado.length;
+  const totalPaginas = Math.max(1, Math.ceil(total / sdkPorPagina));
+  if (sdkPage > totalPaginas) sdkPage = totalPaginas;
+  const inicio = (sdkPage - 1) * sdkPorPagina;
+  const slice = sdkFiltrado.slice(inicio, inicio + sdkPorPagina);
+
+  if (!slice.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fa-solid fa-inbox"></i><p>${sdkCargado ? 'No se encontraron incidencias con los filtros aplicados.' : 'Cargando incidencias desde ServiceDesk...'}</p></div></td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map(r => {
+      const fechaParts = r.fecha.split('-');
+      const fechaDisplay = fechaParts.length === 3 ? `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}` : r.fecha;
+      return `
+        <tr>
+          <td><span style="font-weight:600;color:var(--accent-amber)">${escapeHtml(fechaDisplay)}</span></td>
+          <td><span class="badge-codigo">${escapeHtml(r.bs)}</span></td>
+          <td style="font-weight:600">${escapeHtml(r.nombre)}</td>
+          <td>${escapeHtml(r.area)}</td>
+          <td><span style="font-size:.78rem;color:var(--accent-amber);font-weight:600"><i class="fa-solid fa-wrench" style="margin-right:4px;"></i>${escapeHtml(r.incidente)}</span></td>
+          <td><span style="font-size:.8rem">${escapeHtml(r.canal)}</span></td>
+          <td><span style="display:inline-flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600"><i class="fa-solid fa-user-shield" style="color:var(--accent-blue);font-size:.7rem"></i>${escapeHtml(r.colaborador)}</span></td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  $('sdkInfoPaginacion').innerText = `Mostrando ${slice.length} de ${total} incidencias`;
+  armarPaginacionSdk(totalPaginas);
+}
+
+function armarPaginacionSdk(totalPaginas) {
+  const div = $('sdkBotonesPaginacion');
+  if (totalPaginas <= 1) { div.innerHTML = ''; return; }
+  let html = '';
+  html += `<button class="page-btn" ${sdkPage === 1 ? 'disabled' : ''} onclick="cambiarPaginaSdk(1)"><i class="fa-solid fa-angles-left"></i></button>`;
+  html += `<button class="page-btn" ${sdkPage === 1 ? 'disabled' : ''} onclick="cambiarPaginaSdk(${sdkPage - 1})"><i class="fa-solid fa-angle-left"></i></button>`;
+  const start = Math.max(1, sdkPage - 2);
+  const end = Math.min(totalPaginas, start + 4);
+  for (let i = start; i <= end; i++) {
+    html += `<button class="page-btn ${i === sdkPage ? 'active' : ''}" onclick="cambiarPaginaSdk(${i})">${i}</button>`;
+  }
+  html += `<button class="page-btn" ${sdkPage === totalPaginas ? 'disabled' : ''} onclick="cambiarPaginaSdk(${sdkPage + 1})"><i class="fa-solid fa-angle-right"></i></button>`;
+  html += `<button class="page-btn" ${sdkPage === totalPaginas ? 'disabled' : ''} onclick="cambiarPaginaSdk(${totalPaginas})"><i class="fa-solid fa-angles-right"></i></button>`;
+  div.innerHTML = html;
+}
+
+function cambiarPaginaSdk(p) {
+  if (p < 1) return;
+  sdkPage = p;
+  renderTablaSdk();
 }
 </script>
 </body>
