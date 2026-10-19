@@ -401,15 +401,19 @@ function obtenerIncidenciasOlivettiSDK() {
         if (!row[1] && !row[2]) continue;
 
         const incidenteVal = String(row[5] || '').trim();
-        // Filtrar solo incidencias relacionadas con impresoras Olivetti.
-        // Se busca en TODA la fila (no solo en la columna "Incidente") para no
-        // perder casos como "Instalacion de Impresora Olivetty", donde la marca
-        // puede estar en otra columna o escribirse con variantes ("olivetti",
-        // "olivetty", etc.). También se incluye "impresora" por si la categoría
-        // no repite la marca.
+        // Filtrar SOLO incidencias relacionadas con impresoras Olivetty/Olivetti.
+        // Se busca la marca en TODA la fila (no solo en la columna "Incidente")
+        // para no perder casos como "Instalacion de Impresora Olivetty", donde
+        // la marca puede estar en otra columna o escribirse con variantes
+        // ("olivetti", "olivetty", etc.).
         const filaTexto = row.map(c => String(c || '').toLowerCase()).join(' ');
-        const esOlivetti = filaTexto.includes('olivett') || filaTexto.includes('impresora');
-        if (!esOlivetti) continue;
+        const esOlivetti = filaTexto.includes('olivett'); // olivetti / olivetty
+        // Las impresoras láser ("lasser") ya no se usan: solo se muestran las
+        // Olivetty en la pantalla de Incidencias SDK. Se excluye cualquier
+        // registro que mencione impresora láser, aunque llegue mezclado.
+        const normalizadoFila = filaTexto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const esLaser = /\blasser\b|\blazers?\b/.test(normalizadoFila);
+        if (!esOlivetti || esLaser) continue;
 
         const analistaVal = String(row[7] || '').trim();
         if (['colaboardor', 'colaborador'].includes(analistaVal.toLowerCase())) continue;

@@ -856,6 +856,14 @@
       <select id="sdkFiltroArea" onchange="filtrarSdk()" style="flex:1;min-width:170px;"><option value="">Todas las Áreas</option></select>
       <select id="sdkFiltroAnalista" onchange="filtrarSdk()" style="flex:1;min-width:170px;"><option value="">Todos los Analistas</option></select>
       <select id="sdkFiltroCanal" onchange="filtrarSdk()" style="flex:1;min-width:150px;"><option value="">Todos los Canales</option></select>
+      <select id="sdkFiltroSemana" onchange="filtrarSdk()" title="Filtrar por semana" style="flex:1;min-width:190px;"><option value="">Todas las Semanas</option></select>
+      <select id="sdkFiltroTrimestre" onchange="filtrarSdk()" title="Filtrar por trimestre" style="flex:1;min-width:170px;">
+        <option value="">Todos los Trimestres</option>
+        <option value="Q1">Q1 (Ene - Mar)</option>
+        <option value="Q2">Q2 (Abr - Jun)</option>
+        <option value="Q3">Q3 (Jul - Sep)</option>
+        <option value="Q4">Q4 (Oct - Dic)</option>
+      </select>
       <input type="month" id="sdkFiltroMesDesde" onchange="filtrarSdk()" title="Desde mes" style="flex:0.8;min-width:140px;">
       <input type="month" id="sdkFiltroMesHasta" onchange="filtrarSdk()" title="Hasta mes" style="flex:0.8;min-width:140px;">
       <button class="btn-icon" onclick="resetFiltrosSdk()"><i class="fa-solid fa-eraser"></i><span class="btn-text">Limpiar</span></button>
@@ -2430,17 +2438,25 @@ function cargarIncidenciasSDK(silencioso) {
         area: $('sdkFiltroArea').value,
         analista: $('sdkFiltroAnalista').value,
         canal: $('sdkFiltroCanal').value,
+        semana: $('sdkFiltroSemana').value,
+        trimestre: $('sdkFiltroTrimestre').value,
         mesDesde: $('sdkFiltroMesDesde').value,
         mesHasta: $('sdkFiltroMesHasta').value,
         busqueda: $('sdkSearchInput').value
       };
-      sdkData = res.incidencias || [];
+      sdkData = (res.incidencias || []).filter(i => {
+        // Solo impresoras Olivetty/Olivetti; se descarta cualquier láser ("lasser").
+        const texto = _normalizarTextoSdk([i.incidente, i.area, i.canal, i.nombre, i.hoja].join(' '));
+        return texto.includes('olivett') && !/\blasser\b|\blazers?\b/.test(texto);
+      });
       sdkCargado = true;
       $('countBadgeIncidencias').innerText = sdkData.length;
       poblarSelectsSdk();
       if (filtrosPrevios.area) $('sdkFiltroArea').value = filtrosPrevios.area;
       if (filtrosPrevios.analista) $('sdkFiltroAnalista').value = filtrosPrevios.analista;
       if (filtrosPrevios.canal) $('sdkFiltroCanal').value = filtrosPrevios.canal;
+      if (filtrosPrevios.semana) $('sdkFiltroSemana').value = filtrosPrevios.semana;
+      if (filtrosPrevios.trimestre) $('sdkFiltroTrimestre').value = filtrosPrevios.trimestre;
       $('sdkFiltroMesDesde').value = filtrosPrevios.mesDesde;
       $('sdkFiltroMesHasta').value = filtrosPrevios.mesHasta;
       $('sdkSearchInput').value = filtrosPrevios.busqueda;
@@ -2453,11 +2469,48 @@ function cargarIncidenciasSDK(silencioso) {
   }).obtenerIncidenciasOlivettiSDK();
 }
 
+/* ---------- Helpers de período (semana ISO / trimestre) ---------- */
+// Devuelve [añoISO, numeroSemanaISO] para una fecha "AAAA-MM-DD".
+function _semanaIsoSdk(fechaStr) {
+  const parts = String(fechaStr || '').split('-');
+  if (parts.length < 3) return null;
+  const y = parseInt(parts[0], 10);
+  const m = parseInt(parts[1], 10);
+  const d = parseInt(parts[2], 10);
+  if (!y || !m || !d) return null;
+  const date = new Date(y, m - 1, d);
+  const day = (date.getDay() + 6) % 7; // Lunes = 0
+  date.setDate(date.getDate() - day + 3); // Jueves de la semana ISO
+  const firstThursday = new Date(date.getFullYear(), 0, 4);
+  const firstDay = (firstThursday.getDay() + 6) % 7;
+  firstThursday.setDate(firstThursday.getDate() - firstDay + 3);
+  const week = 1 + Math.round((date - firstThursday) / (7 * 86400000));
+  return [date.getFullYear(), week];
+}
+
+// Clave ordenable de la semana: "AAAA-W##"
+function _claveSemanaSdk(fechaStr) {
+  const w = _semanaIsoSdk(fechaStr);
+  if (!w) return '';
+  return w[0] + '-W' + String(w[1]).padStart(2, '0');
+}
+
+// Trimestre al que pertenece una fecha: 'Q1' | 'Q2' | 'Q3' | 'Q4'
+function _trimestreSdk(fechaStr) {
+  const parts = String(fechaStr || '').split('-');
+  if (parts.length < 2) return '';
+  const mes = parseInt(parts[1], 10);
+  if (!mes || mes < 1 || mes > 12) return '';
+  return 'Q' + Math.ceil(mes / 3);
+}
+
 /* ---------- Poblar selects ---------- */
 function poblarSelectsSdk() {
   const areas = [...new Set(sdkData.map(i => i.area).filter(Boolean))].sort(compararAgencias);
   const analistas = [...new Set(sdkData.map(i => i.colaborador).filter(Boolean))].sort();
   const canales = [...new Set(sdkData.map(i => i.canal).filter(Boolean))].sort();
+  const semanas = [...new Set(sdkData.map(i => _claveSemanaSdk(i.fecha)).filter(Boolean))]
+    .sort().reverse(); // más reciente primero
 
   $('sdkFiltroArea').innerHTML = '<option value="">Todas las Áreas</option>' +
     areas.map(a => `<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`).join('');
@@ -2465,6 +2518,8 @@ function poblarSelectsSdk() {
     analistas.map(a => `<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`).join('');
   $('sdkFiltroCanal').innerHTML = '<option value="">Todos los Canales</option>' +
     canales.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+  $('sdkFiltroSemana').innerHTML = '<option value="">Todas las Semanas</option>' +
+    semanas.map(w => `<option value="${escapeHtml(w)}">Semana ${escapeHtml(w.split('-W')[1])} · ${escapeHtml(w.split('-')[0])}</option>`).join('');
 }
 
 /* ---------- KPIs ---------- */
@@ -2778,6 +2833,8 @@ function filtrarSdk() {
   const area = $('sdkFiltroArea').value;
   const analista = $('sdkFiltroAnalista').value;
   const canal = $('sdkFiltroCanal').value;
+  const semana = $('sdkFiltroSemana').value;
+  const trimestre = $('sdkFiltroTrimestre').value;
   const mesDesde = $('sdkFiltroMesDesde').value;
   const mesHasta = $('sdkFiltroMesHasta').value;
 
@@ -2785,6 +2842,8 @@ function filtrarSdk() {
     if (area && item.area !== area) return false;
     if (analista && item.colaborador !== analista) return false;
     if (canal && item.canal !== canal) return false;
+    if (semana && _claveSemanaSdk(item.fecha) !== semana) return false;
+    if (trimestre && _trimestreSdk(item.fecha) !== trimestre) return false;
     if (mesDesde && item.fecha.substring(0, 7) < mesDesde) return false;
     if (mesHasta && item.fecha.substring(0, 7) > mesHasta) return false;
     if (term) {
@@ -2866,6 +2925,8 @@ function actualizarContadorSdk() {
   const areaVal = $('sdkFiltroArea').value;
   const anVal = $('sdkFiltroAnalista').value;
   const cnVal = $('sdkFiltroCanal').value;
+  const smVal = $('sdkFiltroSemana').value;
+  const trVal = $('sdkFiltroTrimestre').value;
   const mdVal = $('sdkFiltroMesDesde').value;
   const mhVal = $('sdkFiltroMesHasta').value;
 
@@ -2873,6 +2934,8 @@ function actualizarContadorSdk() {
   if (areaVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('area')"><i class="fa-solid fa-building"></i><span>${escapeHtml(areaVal)}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
   if (anVal) chipsHTML.push(`<span class="filter-chip modelo-chip" onclick="limpiarFiltroSdk('analista')"><i class="fa-solid fa-user-shield"></i><span>${escapeHtml(anVal)}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
   if (cnVal) chipsHTML.push(`<span class="filter-chip usb-chip" onclick="limpiarFiltroSdk('canal')"><i class="fa-solid fa-phone"></i><span>${escapeHtml(cnVal)}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+  if (smVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('semana')" style="background:rgba(16,185,129,.12);color:var(--accent-green);border-color:rgba(16,185,129,.35)"><i class="fa-solid fa-calendar-week"></i><span>Semana ${escapeHtml(smVal.split('-W')[1] || smVal)} · ${escapeHtml((smVal.split('-')[0] || ''))}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
+  if (trVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('trimestre')" style="background:rgba(139,92,246,.12);color:var(--accent-purple);border-color:rgba(139,92,246,.35)"><i class="fa-solid fa-calendar-days"></i><span>${escapeHtml(trVal)}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
   if (mdVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('mesDesde')" style="background:rgba(236,72,153,.12);color:var(--accent-pink);border-color:rgba(236,72,153,.35)"><i class="fa-solid fa-calendar"></i><span>Desde: ${mdVal}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
   if (mhVal) chipsHTML.push(`<span class="filter-chip" onclick="limpiarFiltroSdk('mesHasta')" style="background:rgba(236,72,153,.12);color:var(--accent-pink);border-color:rgba(236,72,153,.35)"><i class="fa-solid fa-calendar"></i><span>Hasta: ${mhVal}</span><i class="fa-solid fa-xmark chip-close"></i></span>`);
 
@@ -2887,6 +2950,8 @@ function tieneFiltrosSdkActivos() {
     $('sdkFiltroArea').value ||
     $('sdkFiltroAnalista').value ||
     $('sdkFiltroCanal').value ||
+    $('sdkFiltroSemana').value ||
+    $('sdkFiltroTrimestre').value ||
     $('sdkFiltroMesDesde').value ||
     $('sdkFiltroMesHasta').value
   );
@@ -2897,6 +2962,8 @@ function limpiarFiltroSdk(tipo) {
   if (tipo === 'area') $('sdkFiltroArea').value = '';
   if (tipo === 'analista') $('sdkFiltroAnalista').value = '';
   if (tipo === 'canal') $('sdkFiltroCanal').value = '';
+  if (tipo === 'semana') $('sdkFiltroSemana').value = '';
+  if (tipo === 'trimestre') $('sdkFiltroTrimestre').value = '';
   if (tipo === 'mesDesde') $('sdkFiltroMesDesde').value = '';
   if (tipo === 'mesHasta') $('sdkFiltroMesHasta').value = '';
   filtrarSdk();
@@ -2907,11 +2974,39 @@ function resetFiltrosSdk() {
   $('sdkFiltroArea').value = '';
   $('sdkFiltroAnalista').value = '';
   $('sdkFiltroCanal').value = '';
+  $('sdkFiltroSemana').value = '';
+  $('sdkFiltroTrimestre').value = '';
   $('sdkFiltroMesDesde').value = '';
   $('sdkFiltroMesHasta').value = '';
   sdkOrden = { campo: null, direccion: 'asc' };
   actualizarIconosOrdenSdk();
   filtrarSdk();
+}
+
+/* ---------- Coloreado del incidente según la categoría ---------- */
+// "Configuracion de Impresora Olivetty" (y variantes) -> naranja.
+// "Instalacion de Impresora Olivetty" (y variantes)   -> azul.
+// Cualquier otra incidencia -> color por defecto (ámbar).
+function _normalizarTextoSdk(t) {
+  return String(t || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // elimina tildes
+    .replace(/[^a-z0-9]+/g, ' ')     // espacios normalizados
+    .trim();
+}
+
+function _estiloIncidenteSdk(incidente) {
+  const n = _normalizarTextoSdk(incidente);
+  if (n.includes('impresora') && (n.includes('olivetty') || n.includes('olivetti'))) {
+    if (n.includes('configuracion')) {
+      return { color: 'var(--accent-amber)', icon: 'fa-gear' };   // naranja
+    }
+    if (n.includes('instalacion')) {
+      return { color: 'var(--accent-blue)', icon: 'fa-plug' };    // azul
+    }
+  }
+  return { color: 'var(--accent-amber)', icon: 'fa-wrench' };
 }
 
 /* ---------- Render tabla ---------- */
@@ -2929,13 +3024,14 @@ function renderTablaSdk() {
     tbody.innerHTML = slice.map(r => {
       const fechaParts = r.fecha.split('-');
       const fechaDisplay = fechaParts.length === 3 ? `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}` : r.fecha;
+      const estiloInc = _estiloIncidenteSdk(r.incidente);
       return `
         <tr>
           <td><span style="font-weight:600;color:var(--accent-amber)">${escapeHtml(fechaDisplay)}</span></td>
           <td><span class="badge-codigo">${escapeHtml(r.bs)}</span></td>
           <td style="font-weight:600">${escapeHtml(r.nombre)}</td>
           <td>${escapeHtml(r.area)}</td>
-          <td><span style="font-size:.78rem;color:var(--accent-amber);font-weight:600"><i class="fa-solid fa-wrench" style="margin-right:4px;"></i>${escapeHtml(r.incidente)}</span></td>
+          <td><span style="font-size:.78rem;color:${estiloInc.color};font-weight:600"><i class="fa-solid ${estiloInc.icon}" style="margin-right:4px;"></i>${escapeHtml(r.incidente)}</span></td>
           <td><span style="font-size:.8rem">${escapeHtml(r.canal)}</span></td>
           <td><span style="display:inline-flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600"><i class="fa-solid fa-user-shield" style="color:var(--accent-blue);font-size:.7rem"></i>${escapeHtml(r.colaborador)}</span></td>
         </tr>
